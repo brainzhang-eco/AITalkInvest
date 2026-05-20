@@ -31,6 +31,11 @@
 - `docs/`：包含原始投资规则（rules.md）及相关素材。
 - `src/`：包含书中数学模拟的 Jupyter Notebook 源码及 Python 脚本。
 
+## PDF下载
+
+请到[Release](https://github.com/brainzhang-eco/AITalkInvest/releases) 页面下载PDF
+
+
 ## 导出建议
 
 如果您需要将本书导出为 PDF：
