@@ -1,0 +1,729 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://invest.brainz.fun/03_%E7%AC%AC%E4%B8%89%E5%9B%9E/">
+      
+      
+        <link rel="prev" href="../02_%E7%AC%AC%E4%BA%8C%E5%9B%9E/">
+      
+      
+        <link rel="next" href="../04_%E7%AC%AC%E5%9B%9B%E5%9B%9E/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.46">
+    
+    
+      
+        <title>第三回：神算子细解凯利法，铁纪律克制贪婪心 - 韭韭归一：老亢给小白的投基兵法</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.19d3147f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="./.." title="韭韭归一：老亢给小白的投基兵法" class="md-header__button md-logo" aria-label="韭韭归一：老亢给小白的投基兵法" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            韭韭归一：老亢给小白的投基兵法
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第三回：神算子细解凯利法，铁纪律克制贪婪心
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="Search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="./.." title="韭韭归一：老亢给小白的投基兵法" class="md-nav__button md-logo" aria-label="韭韭归一：老亢给小白的投基兵法" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    韭韭归一：老亢给小白的投基兵法
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  简介
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00_%E5%BA%8F%E8%A8%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  序言
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_%E7%AC%AC%E4%B8%80%E5%9B%9E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  第一回
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_%E7%AC%AC%E4%BA%8C%E5%9B%9E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  第二回
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  第三回
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  第三回
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        亿万富翁的“作弊”游戏
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        真正的生存：四分之一凯利与全球配置
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        附录：老亢提到的硬币实验
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_%E7%AC%AC%E5%9B%9B%E5%9B%9E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  第四回
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_%E7%AC%AC%E4%BA%94%E5%9B%9E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  第五回
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_%E7%AC%AC%E5%85%AD%E5%9B%9E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  第六回
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_%E7%AC%AC%E4%B8%83%E5%9B%9E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  第七回
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_%E7%AC%AC%E5%85%AB%E5%9B%9E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  第八回
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_%E7%BB%93%E8%AF%AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  结语
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        亿万富翁的“作弊”游戏
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        真正的生存：四分之一凯利与全球配置
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        附录：老亢提到的硬币实验
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<h1 id="_1">第三回：神算子细解凯利法，铁纪律克制贪婪心<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>诗曰：</strong>
+<strong>是非成败论概率，多寡盈亏看比例。</strong>
+<strong>世人皆爱满仓冲，谁知七五始称强。</strong></p>
+</blockquote>
+<p>老亢的茶桌上，那张写着：
+$<span class="arithmatex">\(f^* = \frac{p}{L} - \frac{q}{W}\)</span>$
+的纸条被林韭韭视若珍宝，仿佛那是某种失传的武林秘籍。</p>
+<p>“亢哥，我研究了一夜。”林韭韭兴奋得眼睛发绿，“这公式简直神了！如果我能精准算出胜率 <span class="arithmatex">\(p\)</span> ，那以后买哪只股票、投多少仓位，岂不是直接查表就行了？我这就去拉一下最近那只妖股的数据……”</p>
+<p>“打住，打住！”老亢赶紧叫停，又往瓷缸子里添了把新茶，“韭韭，秘籍之所以叫秘籍，是因为如果你练歪了，那是会走火入魔的。你以为凯利公式只是个算账的？它其实是一把照妖镜，专照你心里的那点‘贪’。”</p>
+<p>“怎么说？”</p>
+<p>“先说这个胜率 <span class="arithmatex">\(p\)</span> 。”老亢伸出两根手指，“你在学校考试，60分算及格，对吧？但在资本市场，如果一个游戏的胜率是51%，也就是你比‘纯碰运气’强那么一丁点儿，你觉得该投入多少？”</p>
+<p>“既然是正期望，那当然得多投点啊！”</p>
+<p>“大错特错！”老亢冷笑一声，“根据凯利公式，51%的胜率在大多数博弈里，建议仓位低得让你想哭。为什么？因为现实不是实验室。我告诉你一个残酷的真相：在真实的市场里，如果你想靠‘做 T’这种微操赚到钱，你的胜率门槛不是 51%，而是 <strong>75%</strong>。”</p>
+<p>“七……七十五？”林韭韭手里的茶杯晃了晃，“亢哥，这要求也太高了，专业机构也未必能次次对吧？”</p>
+<p>“这就是问题的关键。你所谓的‘做 T’，本质上是赌市场‘犯错’。但市场犯错后的纠正，有四种剧本：
+1. 定价贵了，短期就纠正（你做空才能赚）；
+2. 定价贵了，涨了三年才纠正（你做空爆仓了）；
+3. 定价贱了，短期就纠正（你抄底赚了）；
+4. 定价贱了，阴跌五年才纠正（你抄底熬死了）。</p>
+<p>你看，这四种随机出现的剧本里，只有‘短期纠正’的那两种对你有利。而在完全随机的波动里，这概率各占 25%。如果你没有超过 75% 的判断力去剔除另外那 75% 的随机噪音，你就是在跟概率硬刚。”</p>
+<p>林韭韭听得冷汗直流，老亢接着补刀，抛出了更狠的料：“再送你一个‘中位数陷阱’。那个涨20%跌17%的游戏，由于一盈一亏会产生0.4%的复利损耗。如果你找100个人来玩一万把，由于期望收益为正，最后这100个人的‘平均资产’会非常惊人——因为里面会诞生两三个极度走运的‘超级欧皇’。但剩下的97个人，本金几乎全部归零！”</p>
+<p>“这么惨？”</p>
+<p>“更惨的是，<strong>交易次数 N</strong> 是你的天敌。”老亢神色冷峻，“对于普通人，你的资产中位数是按 <span class="arithmatex">\((1.2 \times 0.83)^{N/2}\)</span> 的速度指数级缩水的。也就是说，你交易得越频繁，你的命运就越向那个‘归零的中位数’靠拢。你想靠胜率跑赢数学损耗？没到75%之前，你做得越多，死得越快。这就好比你在慢性服毒，每多做一笔无谓的交易，就是多吃一小口砒霜。”</p>
+<p>林韭韭缩了缩脖子：“所以啊，这就是为什么你让我‘少交易’。”</p>
+<p>“没错。交易次数越多，运气消耗得越快。”老亢语重心长地说道，“为了让你彻底死心，我再给你讲个《消失的亿万富翁》里那个硬币游戏。”</p>
+<h3 id="_2">亿万富翁的“作弊”游戏<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>“给你 25 块钱，还有一个灌了铅的硬币。这硬币有 <strong>60%</strong> 的概率朝上。赢了翻倍，输了亏光。你的目标是：把这 25 块变成 250 块，翻十倍。按照刚才的公式，每次你应该压 20% 的仓位。看起来这游戏稳赢对吧？但我告诉你，即便你把仓位砍一半，每把只下 10%（半凯利），我模拟了一遍，整整玩了 192 把才通关。”</p>
+<p>林韭韭不解：“ 60% 胜率哎，怎么还要玩这么久？”</p>
+<p>“因为即便有优势，走背运的时间段也会长得让你绝望。听听这 192 把里发生了什么：前 20 把你根本看不出优势，资产就在原地磨蹭；中间运气好了干到了 76 块，紧接着连续走背运，资产从巅峰回撤了 <strong>64%</strong>，跌到 29 块！这时候你会怀疑这硬币真的有 60% 胜率吗？你会觉得亢哥中途把硬币换了！”</p>
+<p>“每一把游戏如果对应投资里的半年，你整整玩了 55 年才通关。如果是按理论最赚钱的‘全凯利’ 20% 压，中途一度会回撤 <strong>93%</strong>。你想想你在 75 岁风烛残年时，本金只剩 20 岁时的一半，你还玩得下去吗？现实中，你是 loser、是败家子，你会觉得这个市场是圈钱的深渊。”</p>
+<h3 id="_3">真正的生存：四分之一凯利与全球配置<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>林韭韭打了个寒颤：“凯利公式……原来是个巨大的黑洞。即便有 60% 的优势，人性也熬不过时间的摧残。”</p>
+<p>“问得好。这就是凯利公式在实际应用中的‘心法’。在模糊的现实里，我们要遵循‘半凯利’甚至‘小凯利’原则。即便公式算出你可以投 50%，你为了防备那个‘万一’，也只投 25%。永远留出一部分‘保命钱’，这样即便天塌了，你还有翻盘的本钱。”</p>
+<p>“而且，你不能一直赌‘大明胜’。你要分散，努尔哈赤那里压一些，吴三桂那里压一些，李自成那里也得压一些。只有这样，当你在这个硬币上连续遇到那 40% 的厄运时，别的盘子能让你活下去。”</p>
+<p>林韭韭收起纸条，深深鞠了一躬：“亢哥，我懂了。投资，就是一场在确定性的数学里，对抗不确定的人性的战争。”</p>
+<p>“去吧。”老亢欣慰地摆摆手，“记住了，少交易，多睡觉。下回咱们聊马科维茨的‘资产配置’大阵。”</p>
+<p><strong>林韭韭欲识排兵之法，且听下回分解。</strong></p>
+<hr />
+<h3 id="_4">附录：老亢提到的硬币实验<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>手动模拟地址</strong>：<a href="https://elmwealth.com/coin-flip/">Elm Wealth - The Coin Flip Game</a>
+    <em>建议读者亲自动手玩到资产翻十倍，体会那 192 把博弈中的心理煎熬。</em></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":[],"search":"../assets/javascripts/workers/search.b6b7e04f.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.ee611ef6.min.js"></script>
+      
+    
+  </body>
+</html>
