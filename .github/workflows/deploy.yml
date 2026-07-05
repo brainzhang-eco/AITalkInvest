@@ -6,10 +6,19 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -19,6 +28,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
 
       - name: Install dependencies
         run: |
@@ -27,11 +41,20 @@ jobs:
 
       - name: Build static site
         run: |
+          rm -rf docs/superpowers
           zensical build --clean
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      # ⚠️ 2. 配置官方的 Pages 环境
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # ⚠️ 3. 官方步骤一：上传编译好的静态目录（对应你原本的 ./site）
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
-          cname: invest.brainz.fun
+          path: './site'
+
+      # ⚠️ 4. 官方步骤二：直接部署到后台，不再需要中转分支
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
