@@ -73,6 +73,17 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .toc a {{ color: #d2691e; text-decoration: none; }}
     .toc a:hover {{ text-decoration: underline; }}
 </style>
+<script>
+window.MathJax = {{
+    tex: {{
+        inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+        displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
+        processEscapes: true,
+        processEnvironments: true
+    }}
+}};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
 </head>
 <body>
 <h1>{title}</h1>
@@ -98,8 +109,7 @@ def simple_md_to_html(md_text):
     html = re.sub(r'^#### (.*)$', r'<h4>\1</h4>', html, flags=re.M)
     html = re.sub(r'^> (.*)$', r'<blockquote>\1</blockquote>', html, flags=re.M)
     html = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', html)
-    html = re.sub(r'\$(.*?)\$', r'<code>\1</code>', html)
-    html = re.sub(r'\$\$(.*?)\$\$', r'<pre>\1</pre>', html, flags=re.S)
+    # MathJax handles $ and $$ delimiters, do not replace them with code/pre tags
     html = re.sub(r'^\* (.*)$', r'<li>\1</li>', html, flags=re.M)
     html = re.sub(r'\[(.*?)\]\((.*?)\)', r'<a href="\2">\1</a>', html)
     html = html.replace('\n\n', '</p><p>')
