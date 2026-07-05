@@ -8,8 +8,8 @@ CHAPTERS = [
     "08_第八回.md", "09_结语.md"
 ]
 BOOK_TITLE = "韭韭归一：老亢给小白的投基兵法"
-MD_OUTPUT = f"{BOOK_TITLE}.md"
-HTML_OUTPUT = f"{BOOK_TITLE}.html"
+MD_OUTPUT = os.path.join("docs", f"{BOOK_TITLE}.md")
+HTML_OUTPUT = os.path.join("docs", f"{BOOK_TITLE}.html")
 
 # HTML Template
 HTML_TEMPLATE = """<!DOCTYPE html>
@@ -109,7 +109,7 @@ def build():
     # 1. Prepare TOC and Titles
     titles = []
     for chapter in CHAPTERS:
-        with open(chapter, "r", encoding="utf-8") as f:
+        with open(os.path.join("docs", chapter), "r", encoding="utf-8") as f:
             first_line = f.readline()
             titles.append(first_line.replace("# ", "").strip())
 
@@ -121,7 +121,7 @@ def build():
             f.write(f"{i}. [{title}](#{title.replace('：', '').replace(' ', '-')})\n")
         f.write("\n---\n\n")
         for chapter in CHAPTERS:
-            with open(chapter, "r", encoding="utf-8") as c:
+            with open(os.path.join("docs", chapter), "r", encoding="utf-8") as c:
                 content = c.read()
                 f.write(content)
                 f.write(page_break_md)
@@ -134,7 +134,7 @@ def build():
 
     body_content = ""
     for i, chapter in enumerate(CHAPTERS):
-        with open(chapter, "r", encoding="utf-8") as f:
+        with open(os.path.join("docs", chapter), "r", encoding="utf-8") as f:
             content = f.read()
             body_content += f'<div id="ch{i}" class="page-break">'
             body_content += simple_md_to_html(content)
